@@ -1,6 +1,6 @@
 <html>
 <head>
-    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
 	<script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -8,6 +8,7 @@
 	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	 <link  rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" type="text/css"></link>
 	 <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+	 <script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
 	 <script type="text/javascript">
 		var dataSet = [
     [ "Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800" ],
@@ -48,9 +49,7 @@
     [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
 ];
 		Vue.directive('datatable', {
-
 		  inserted: function (el) {
-
 			$(el).DataTable({
 				data: dataSet,
 				columns: [
@@ -64,6 +63,24 @@
 		
 			});
 		  }
+		});
+	
+		Vue.component('i18n_custom',{
+		
+			template : '<select v-model="lang"  v-on:change="changeLanguage">'
+			+'<option value="en">English</option>'
+			+'<option value="ja">Japan</option>'
+			+'</select>',
+			
+			methods : {
+				changeLanguage : function(){
+					window.localStorage.setItem("lang", this.lang);
+					window.location.reload();
+				}
+			},
+			data : function(){
+				return {lang : window.localStorage.getItem('lang')};
+			}
 		});
 		
 		Vue.component('tablecomponent',{
@@ -99,17 +116,16 @@
 		});
 		
 		Vue.component('container',{
-			template: '<div><tablecomponent></tablecomponent><artistscomponent></artistscomponent></div>'
+			template: '<div><artistscomponent></artistscomponent></div>'
 		});
 		
 		var User = {
-		  template: '<div>User</div>'
+		  template: '<div>{{ $t("message.hello") }}<tablecomponent></tablecomponent></div>'
 		}
 		
 		var Home = {
 			template : '<container></container>'
 		}
-
 		var vrouter = new VueRouter({
 		  routes: [
 			{name: 'user', path: '/user', component: User },
@@ -117,27 +133,59 @@
 		  ]
 		})
 		
+		var messages = {
+		  en: {
+			message: {
+			  hello: 'hello world'
+			}
+		  },
+		  ja: {
+			message: {
+			  hello: 'こんにちは、世界'
+			}
+		  },
+		  custom : {
+			message : {
+				hello : 'asdasd'
+			}
+		  }
+		  
+		}
+		if(!window.localStorage.getItem("lang"))
+		window.localStorage.setItem("lang", "en");
+		
+		var i18n = new VueI18n({
+		  locale: window.localStorage.getItem("lang"), // set locale
+		  messages, // set locale messages
+		})
+		
+		
 	 </script>
 </head>
 <body>
     
 	<div id = "demo">
-		<router-link :to="{ name: 'home'}">home</router-link>
-		<router-link :to="{ name: 'user'}">user</router-link>
-		<router-view></router-view>
+			<i18n_custom></i18n_custom>
+			<router-link :to="{ name: 'home'}">home</router-link>
+			<router-link :to="{ name: 'user'}">user</router-link>
+			<router-view></router-view>
 	</div>
 	
 	
 	<script>
 	
-
         var vue = new Vue({
 		  el: '#demo',
 		  data: {
 			model: {
 				msg:"",checked:false,picked:"",selected:"",multiSelect:[]
-			}
+			},
+	
 		  },
+		  methods :{
+			
+		  }
+		  ,
 			mounted: function () {
 			  this.$nextTick(function () {
 				 
@@ -145,9 +193,14 @@
 			}
 		  ,
 		  methods : {},
-		  router : vrouter
+		  router : vrouter,
+		  i18n : i18n
 		  
-		});		
+		});	
+		
+		
+		
+	
 	</script>
   
 </body>
