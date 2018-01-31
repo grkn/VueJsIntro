@@ -29,36 +29,128 @@ Vue.component('entity',{
 	template : '<div class="col-sm-6 col-md-4">'
 					+'<div class="thumbnail">'
 					  +'<div class="caption">'
-						+'<h3>{{name}} {{index}}</h3>'
-						+'<p>...</p>'
-						+'<p><a href="#" class="btn btn-primary" role="button">Çıkar</a> <a href="#" class="btn btn-default" role="button">Ekle</a></p>'
+						+'<h3>{{index}} - {{name}} </h3>'
+						+'<p><input type="text" v-model="sentence"></p>'
+						+'<p><label>{{$t("message.storedSentence")}} : </label><span>{{storedSentence}}</span></p>'
+						+'<p><a  class="btn btn-primary" role="button" v-on:click="removeSentece(id)">{{$t("message.remove")}}</a>' 
+						+'<a class="btn btn-default" role="button" v-on:click="addSentence(id)">{{$t("message.add")}}</a></p>'
 					  +'</div>'
 					+'</div>'
 				  +'</div>',
-	props: ['name','index']			  
+	props: ['name','index','id'],
+
+	methods : {
+		addSentence : function(id){
+			console.log(id);
+			if(this.sentence.trim() != ""){
+					this.storedSentence = this.sentence;
+			}
+		},
+		removeSentece : function(id){
+			if(this.sentence.trim() != ""){
+					this.storedSentence = "";
+			}
+		}
+	},
+	data :	function () {
+		return {sentence : "",storedSentence : ""}
+		
+	}
 				  
 });
 
 Vue.component('row',{
-	template : '<div class="row"> <entity v-for="(entity,index) in array" v-bind:name="entity.name" v-bind:index="index" :key="entity.id"></entity></div>',
+	template : '<div class="row"> <entity v-for="(entity,index) in array" v-bind:name="entity.name" v-bind:id="entity.id"  v-bind:index="index" :key="entity.id"></entity></div>',
 	props: ['array']
 	
 });
 
 var container = Vue.component('container',{
-	template: 	'<div><div class="header"> HEADER </div>'
-				+'<div class="content"><row v-for="entityArray in this.entityList"  v-bind:array="entityArray" ></row></div>'
-				+'<div class="footer">FOOTER</div></div>',
+	template: 	'<div style="position:relative;width:80%;left:10%">'
+						+'<div class="header"><div class="page-header">'
+							+'<div  style="text-align:center">'
+								+'<h1>{{$t("message.header")}}</h1>'
+							+'</div>'
+							+'<span>'
+								+'<router-link :to="{ name: \'home\'}">{{$t("message.home")}}</router-link>'
+							+'</span>'
+							+'<span style="float:right">'
+								+'<i18n_custom></i18n_custom>'
+							+'</span>'
+						+'</div>'
+				+'</div>'
+				+'<div class="content"><div><label>{{$t("message.search")}}</label> <input type="text" v-model="searchText" v-on:keyup="search"/></div><br/><br/><row v-for="entityArray in this.entityList"  v-bind:array="entityArray" ></row></div>'
+				+'<div class="footer"></div></div>',
 	methods : {
-		
+		search : function(){
+			if(this.searchText.trim() == ""){
+				this.immutableObjectToEntity();
+				return;
+			}
+			this.immutableObjectToEntity();
+			for(var i = 0 ; i < this.original.length ;i++){
+				for(var j = 0 ; j < this.original[i].length;j++){
+					if(this.original[i][j].name.toUpperCase().indexOf(this.searchText.toUpperCase()) < 0){
+						var k = 0 ;
+						for(k=0 ; k < this.entityList.length;k++){
+							var z = 0 ;
+							var flag = false;
+							for(z = 0 ; z < this.entityList[k].length; z++){
+								if(this.entityList[k][z].id == this.original[i][j].id){
+									flag= true;
+									break;
+								}
+							}
+							if(flag){
+								this.entityList[k].splice(z,1);
+							}
+						}
+					}
+				}
+			}
+		},
+		immutableObjectToOriginal: function(){
+			for(var i = 0 ; i < this.entityList.length ;i++){
+				var mod3Array = [];
+				for(var j = 0 ; j < this.entityList[i].length;j++){
+					var obj = {};
+					for(var key in this.entityList[i][j]){
+						obj[key] = this.entityList[i][j][key];
+					}
+					mod3Array = mod3Array.concat(obj);
+				}
+				
+				this.original.push(mod3Array);
+			}
+		},
+		immutableObjectToEntity: function(){
+			this.entityList = [];
+			for(var i = 0 ; i < this.original.length ;i++){
+				var mod3Array = [];
+				for(var j = 0 ; j < this.original[i].length;j++){
+					var obj = {};
+					for(var key in this.original[i][j]){
+						obj[key] = this.original[i][j][key];
+					}
+					mod3Array = mod3Array.concat(obj);
+				}
+				
+				this.entityList.push(mod3Array);
+			}
+		}
+			
+			
 	},
 	mounted : function(){
 		this.$nextTick(function () {
-			 console.log("mounted");
+			this.immutableObjectToOriginal();
 		})
+		
 	},
 	data :	function () {
-		return {entityList :[[{id : 1 ,name : "A Entity"},{id : 2 ,name : "B Entity"},{id : 3 ,name : "C Entity"}],[{id : 4  ,name : "D Entity"},{id : 5 ,name:"E Entity"}]]}
+		return {entityList :[[{id : 1 ,name : "A Intent"},{id : 2 ,name : "B Intent"},{id : 3 ,name : "C Intent"}],[{id : 4  ,name : "D Intent"},{id : 5 ,name:"E Intent"}]], original :[],
+		searchText : ""}
+		
 	}
 });
 var vrouter = new VueRouter({
