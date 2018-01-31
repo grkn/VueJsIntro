@@ -17,13 +17,15 @@ Vue.component('i18n_custom',{
 	}
 });
 
+
+
 if(!window.localStorage.getItem("lang"))
 		window.localStorage.setItem("lang", "tr");
 		
 var i18n = new VueI18n({
   locale: window.localStorage.getItem("lang"), // set locale
-  messages, // set locale messages
-})
+  messages:messages // set locale messages
+});
 
 Vue.component('entity',{
 	template : '<div class="col-sm-6 col-md-4">'
@@ -157,7 +159,7 @@ var vrouter = new VueRouter({
 	routes: [
 	{name: 'home', path: '/', component: container }
 	]
-})
+});
 
 var vue = new Vue({
   el: '#app',
