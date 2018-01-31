@@ -92,7 +92,7 @@ var container = Vue.component('container',{
 			this.immutableObjectToEntity();
 			for(var i = 0 ; i < this.original.length ;i++){
 				for(var j = 0 ; j < this.original[i].length;j++){
-					if(this.original[i][j].name.toUpperCase().indexOf(this.searchText.toUpperCase()) < 0){
+					if(this.original[i][j].name.toLocaleUpperCase().indexOf(this.searchText.toLocaleUpperCase()) < 0){
 						var k = 0 ;
 						for(k=0 ; k < this.entityList.length;k++){
 							var z = 0 ;
@@ -150,7 +150,7 @@ var container = Vue.component('container',{
 		
 	},
 	data :	function () {
-		return {entityList :[[{id : 1 ,name : "A Intent"},{id : 2 ,name : "B Intent"},{id : 3 ,name : "C Intent"}],[{id : 4  ,name : "D Intent"},{id : 5 ,name:"E Intent"}]], original :[],
+		return {entityList :[[{id : 1 ,name : "A İntent"},{id : 2 ,name : "B Intent"},{id : 3 ,name : "C Intent"}],[{id : 4  ,name : "D Intent"},{id : 5 ,name:"E Intent"}]], original :[],
 		searchText : ""}
 		
 	}
