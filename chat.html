@@ -17,6 +17,12 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	
 	<style>
+	
+		*{
+			-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+			-moz-box-sizing: border-box; /* Firefox, other Gecko */
+			box-sizing: border-box; /* Opera/IE 8+ */
+		}
 		.mine{
 			text-align:right;
 			
@@ -44,24 +50,17 @@
 		}
 		.input span{
 			height:50px;
-			width:10%;
+			width:9%;
 		}
 		.input input{
-			height:50px;
+			height:40px;
 			width:70%;
 		}
 		.input img{
 			height:50px;
 			width:10%;
 		}
-		.input img{
-			height:50px;
-			width:10%;
-		}
-		.input button{
-			height:50px;
-			width:10%;
-		}
+		
 	</style>
 </head>
 <body>
@@ -79,9 +78,9 @@
 
 			</ul>
 	  </div>
-	  <div class="input" style="width:300px;border:1px solid #c3c3c3;height:50px;text-align:center;">
-		<span class="persistenceMenu">PM</span><input type="text" name="input" placeholder="Mesaj Yazınız" style="border:none"/> 
-		<img src="http://www.clker.com/cliparts/I/S/8/D/y/K/mail-attachment-md.png" /><button type="button">E</button>
+	  <div class="input" style="width:300px;border:1px solid #c3c3c3;height:50px;">
+		<span class="persistenceMenu glyphicon glyphicon-menu-hamburger"></span><input type="text" name="input" placeholder="Mesaj Yazınız" style="border:none"/> 
+		<img src="http://www.clker.com/cliparts/I/S/8/D/y/K/mail-attachment-md.png" /><span class="glyphicon glyphicon-menu-right"></span>
 	  </div>
 	</div>
 	
