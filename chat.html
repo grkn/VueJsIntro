@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+	 
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<style>
+		.mine{
+			text-align:right;
+			
+		}
+		.bot{
+			text-align:left;
+		}
+		
+		.mine > span{
+			padding:10px 10px 10px 10px;
+			border-bottom-left-radius: 1em;
+			border-bottom-right-radius: 1.0em;
+			border-top-right-radius: 4px;
+			border-top-left-radius: 1.0em;
+			background-color: #3498db;
+			color: #fff;
+		}
+		.bot > span{
+			padding:10px 10px 10px 10px;
+			background-color: #c3c3c3;
+			border-bottom-left-radius: 1.0em;
+			border-top-left-radius: 4px;
+			border-bottom-right-radius: 1.0em;
+			border-top-right-radius: 1.0em;
+		}
+		.input span{
+			height:50px;
+			width:10%;
+		}
+		.input input{
+			height:50px;
+			width:70%;
+		}
+		.input img{
+			height:50px;
+			width:10%;
+		}
+		.input img{
+			height:50px;
+			width:10%;
+		}
+		.input button{
+			height:50px;
+			width:10%;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+	  <h2>Simple Collapsible</h2>
+	  <p>Click on the button to toggle between showing and hiding content.</p>
+	  <button style="width:300px" type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>
+	  <div id="demo" class="collapse in" style="width:300px;border:1px solid #c3c3c3;max-height:500px;overflow-y:scroll">
+			<ul style="list-style:none;line-height:50px;padding-left:10px;padding-right:10px;">
+				<li class="bot"><span>AAAAAA</span></li>
+				<li class="mine"><span>BBBBB</span></li>
+				<li class="mine"><span>CCCCCC</span></li>
+				<li class="bot"><span>DDDDDD</span></li>
+
+			</ul>
+	  </div>
+	  <div class="input" style="width:300px;border:1px solid #c3c3c3;height:50px;text-align:center;">
+		<span class="persistenceMenu">PM</span><input type="text" name="input" placeholder="Mesaj Yazınız" style="border:none"/> 
+		<img src="http://www.clker.com/cliparts/I/S/8/D/y/K/mail-attachment-md.png" /><button type="button">E</button>
+	  </div>
+	</div>
+	
+</body>
+</html>
